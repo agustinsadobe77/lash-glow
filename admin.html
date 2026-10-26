@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Panel – Lash Glow AS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FBF3F1;color:#3B2A2E;font-family:'DM Sans',sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 20px 64px;box-sizing:border-box}
+h1{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:40px;margin:0 0 8px}
+p{color:#6E5A5E;line-height:1.5}
+input{font-family:inherit;font-size:16px;padding:14px 16px;border:1.5px solid #E5CFCB;border-radius:12px;background:#fff;color:#3B2A2E;box-sizing:border-box}
+button{font-family:inherit;font-size:15px;min-height:44px;padding:10px 20px;border-radius:999px;border:1.5px solid #A8606B;background:#fff;color:#7A3F49;font-weight:700;cursor:pointer}
+button.main{background:#A8606B;color:#fff}
+button.sm{min-height:36px;padding:6px 14px;font-size:14px}
+.card{background:#fff;border-radius:20px;padding:20px;box-sizing:border-box;overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:15px}
+th{text-align:left;padding:10px;border-bottom:2px solid #F3E2DF}
+td{padding:10px;border-bottom:1px solid #F3E2DF;vertical-align:middle}
+.tag{display:inline-block;padding:4px 12px;border-radius:999px;font-size:13px;font-weight:700}
+.Pendiente{background:#FBEFD5;color:#7A5A12}
+.Confirmado{background:#E6F2EC;color:#2F6B4F}
+.Cancelado{background:#F3D9DD;color:#7A3640}
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:20px 0}
+#msg{color:#7A3640;min-height:22px;margin:12px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Panel de turnos</h1>
+
+  <div id="login">
+    <p>Ingresá tu clave para ver las reservas.</p>
+    <div class="bar">
+      <input id="clave" type="password" placeholder="Clave" autocomplete="current-password" style="width:260px">
+      <button id="entrar" class="main" type="button">Entrar</button>
+    </div>
+  </div>
+
+  <div id="panel" style="display:none">
+    <div class="bar">
+      <button id="refrescar" type="button">Actualizar</button>
+      <label style="display:flex;gap:8px;align-items:center;font-size:15px"><input id="ver-todo" type="checkbox" style="width:auto"> Mostrar también canceladas y pasadas</label>
+      <button id="salir" type="button" class="sm">Salir</button>
+    </div>
+    <div class="card"><table><thead><tr>
+      <th>Día</th><th>Horario</th><th>Lugar</th><th>Nombre</th><th>Servicio</th><th>Estado</th><th>Acción</th>
+    </tr></thead><tbody id="filas"></tbody></table></div>
+    <p id="vacio" style="display:none">No hay reservas para mostrar.</p>
+  </div>
+  <div id="msg" role="alert"></div>
+</div>
+
+<script>
+(function () {
+  // Misma URL del Apps Script (termina en /exec) que usa la página principal.
+  var AGENDA_URL = 'https://script.google.com/macros/s/AKfycbwKcWxf8xsB9MLMBkmUWBhQsZiv9QI8wxSu8JKdmD6ROS3uU8Buv25CjGV1ynedN2eerA/exec';
+  var clave = sessionStorage.getItem('clave') || '';
+  var datos = [];
+
+  function $(id) { return document.getElementById(id); }
+  function msg(t) { $('msg').textContent = t || ''; }
+
+  function llamar(body) {
+    body.clave = clave;
+    return fetch(AGENDA_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) })
+      .then(function (r) { return r.json(); });
+  }
+
+  function errorTexto(j) {
+    if (j.error === 'mal') return 'Clave incorrecta.';
+    if (j.error === 'bloqueado') return 'Demasiados intentos. Esperá 15 minutos.';
+    return 'No se pudo completar la acción.';
+  }
+
+  function hoyISO() {
+    var n = new Date();
+    return n.getFullYear() + '-' + String(n.getMonth() + 1).padStart(2, '0') + '-' + String(n.getDate()).padStart(2, '0');
+  }
+
+  function diaTexto(iso) {
+    var p = iso.split('-').map(Number);
+    var t = new Date(p[0], p[1] - 1, p[2]).toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' });
+    return t.charAt(0).toUpperCase() + t.slice(1);
+  }
+
+  function celda(tr, texto) {
+    var td = document.createElement('td');
+    td.textContent = texto;
+    tr.appendChild(td);
+    return td;
+  }
+
+  function boton(texto, estado, fila) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'sm' + (estado === 'Confirmado' ? ' main' : '');
+    b.textContent = texto;
+    b.style.marginRight = '6px';
+    b.onclick = function () {
+      b.disabled = true;
+      llamar({ action: 'admin_set', row: fila, estado: estado }).then(function (j) {
+        if (!j.ok) { msg(errorTexto(j)); b.disabled = false; return; }
+        datos = j.rows; pintar();
+      }).catch(function () { msg('Error de conexión.'); b.disabled = false; });
+    };
+    return b;
+  }
+
+  function pintar() {
+    var todo = $('ver-todo').checked;
+    var hoy = hoyISO();
+    var lista = datos.filter(function (x) {
+      return todo || (x.estado !== 'Cancelado' && x.d >= hoy);
+    }).sort(function (a, b) { return (a.d + a.t) < (b.d + b.t) ? -1 : 1; });
+    var tb = $('filas');
+    tb.innerHTML = '';
+    lista.forEach(function (x) {
+      var tr = document.createElement('tr');
+      celda(tr, diaTexto(x.d));
+      celda(tr, x.t + ' hs');
+      celda(tr, x.city);
+      celda(tr, x.name);
+      celda(tr, x.service);
+      var te = document.createElement('td');
+      var tag = document.createElement('span');
+      tag.className = 'tag ' + x.estado;
+      tag.textContent = x.estado;
+      te.appendChild(tag);
+      tr.appendChild(te);
+      var ta = document.createElement('td');
+      if (x.estado !== 'Confirmado') ta.appendChild(boton('Confirmar', 'Confirmado', x.row));
+      if (x.estado !== 'Cancelado') ta.appendChild(boton('Cancelar', 'Cancelado', x.row));
+      else ta.appendChild(boton('Reabrir', 'Pendiente', x.row));
+      tr.appendChild(ta);
+      tb.appendChild(tr);
+    });
+    $('vacio').style.display = lista.length ? 'none' : 'block';
+  }
+
+  function cargar() {
+    msg('');
+    if (!AGENDA_URL) { msg('Falta pegar la URL del Apps Script en AGENDA_URL.'); return; }
+    llamar({ action: 'admin_list' }).then(function (j) {
+      if (!j.ok) {
+        sessionStorage.removeItem('clave');
+        $('login').style.display = 'block';
+        $('panel').style.display = 'none';
+        msg(errorTexto(j));
+        return;
+      }
+      sessionStorage.setItem('clave', clave);
+      datos = j.rows;
+      $('login').style.display = 'none';
+      $('panel').style.display = 'block';
+      pintar();
+    }).catch(function () { msg('Error de conexión.'); });
+  }
+
+  $('entrar').onclick = function () { clave = $('clave').value; cargar(); };
+  $('clave').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('entrar').click(); });
+  $('refrescar').onclick = cargar;
+  $('ver-todo').onchange = pintar;
+  $('salir').onclick = function () {
+    sessionStorage.removeItem('clave'); clave = '';
+    $('panel').style.display = 'none'; $('login').style.display = 'block'; $('clave').value = '';
+  };
+  if (clave) cargar();
+})();
+</script>
+</body>
+</html>
