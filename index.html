@@ -55,8 +55,20 @@ h1{font-size:clamp(44px,8vw,84px) !important}
 <p style="margin:0;line-height:1.6;color:#6E5A5E">Diseño y limpieza de cejas para enmarcar tu rostro.</p>
 </div>
 <div style="flex:1 1 240px;background:#FFFFFF;border-radius:20px;padding:32px;box-sizing:border-box">
+<div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;margin-bottom:12px">Perfilado y Laminado</div>
+<p style="margin:0;line-height:1.6;color:#6E5A5E">El combo ideal para unas cejas perfectas y definidas.</p>
+</div>
+<div style="flex:1 1 240px;background:#FFFFFF;border-radius:20px;padding:32px;box-sizing:border-box">
 <div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;margin-bottom:12px">Permanente</div>
 <p style="margin:0;line-height:1.6;color:#6E5A5E">Consultá por este servicio y te cuento cómo funciona.</p>
+</div>
+<div style="flex:1 1 240px;background:#FFFFFF;border-radius:20px;padding:32px;box-sizing:border-box">
+<div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;margin-bottom:12px">Extensiones de pestañas</div>
+<p style="margin:0;line-height:1.6;color:#6E5A5E">Realzá tu mirada con pestañas más largas y con volumen. Consultá por los estilos disponibles.</p>
+</div>
+<div style="flex:1 1 240px;background:#FFFFFF;border-radius:20px;padding:32px;box-sizing:border-box">
+<div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;margin-bottom:12px">Quitar extensiones</div>
+<p style="margin:0;line-height:1.6;color:#6E5A5E">Retiro seguro y profesional de extensiones para cuidar tu pestaña natural.</p>
 </div>
 </div>
 </div>
@@ -74,7 +86,22 @@ h1{font-size:clamp(44px,8vw,84px) !important}
 <div style="flex:1 1 320px;border:1.5px solid #E5CFCB;border-radius:24px;padding:40px;box-sizing:border-box;display:flex;flex-direction:column;gap:16px">
 <div style="font-size:13px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:#A8606B">Solo pestañas</div>
 <div style="font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;line-height:1.15">Lifting solo</div>
-<div style="font-family:'Cormorant Garamond',serif;font-size:60px;font-weight:600;color:#A8606B">$10.000</div>
+<div style="font-family:'Cormorant Garamond',serif;font-size:60px;font-weight:600;color:#A8606B">$13.000</div>
+</div>
+<div style="flex:1 1 320px;border:1.5px solid #E5CFCB;border-radius:24px;padding:40px;box-sizing:border-box;display:flex;flex-direction:column;gap:16px">
+<div style="font-size:13px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:#A8606B">Mirada con volumen</div>
+<div style="font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;line-height:1.15">Extensiones de pestañas</div>
+<div style="font-family:'Cormorant Garamond',serif;font-size:60px;font-weight:600;color:#A8606B">$18.000</div>
+</div>
+<div style="flex:1 1 320px;border:1.5px solid #E5CFCB;border-radius:24px;padding:40px;box-sizing:border-box;display:flex;flex-direction:column;gap:16px">
+<div style="font-size:13px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:#A8606B">Combo Cejas</div>
+<div style="font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;line-height:1.15">Perfilado y laminado</div>
+<div style="font-family:'Cormorant Garamond',serif;font-size:60px;font-weight:600;color:#A8606B">$5.000</div>
+</div>
+<div style="flex:1 1 320px;border:1.5px solid #E5CFCB;border-radius:24px;padding:40px;box-sizing:border-box;display:flex;flex-direction:column;gap:16px">
+<div style="font-size:13px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;color:#A8606B">Mantenimiento</div>
+<div style="font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;line-height:1.15">Quitar extensiones</div>
+<div style="font-family:'Cormorant Garamond',serif;font-size:60px;font-weight:600;color:#A8606B">$3.000</div>
 </div>
 </div>
 </div>
@@ -130,18 +157,22 @@ h1{font-size:clamp(44px,8vw,84px) !important}
 AS Lash Lift · Balcarce y Mar del Plata · @lashglow_as · WhatsApp 2266 46-7982
 </footer>
 </div>
+
 <script>
-(function () {
+window.addEventListener('DOMContentLoaded', function() {
   var WA = '5492266467982';
   var ACCENT = '#A8606B';
-  // Pegá acá la URL de tu Apps Script (termina en /exec). Vacía = sin agenda en vivo.
   var AGENDA_URL = 'https://script.google.com/macros/s/AKfycbwKcWxf8xsB9MLMBkmUWBhQsZiv9QI8wxSu8JKdmD6ROS3uU8Buv25CjGV1ynedN2eerA/exec';
+  
   var services = [
-    { id: 'lifting', label: 'Lifting solo', price: '$10.000' },
+    { id: 'lifting', label: 'Lifting solo', price: '$13.000' },
     { id: 'combo', label: 'Lifting + laminado + perfilado', price: '$15.000' },
     { id: 'laminado', label: 'Laminado de cejas', price: '' },
     { id: 'perfilado', label: 'Perfilado de cejas', price: '' },
-    { id: 'permanente', label: 'Permanente', price: '' }
+    { id: 'perfilado-laminado', label: 'Perfilado y laminado', price: '$5.000' },
+    { id: 'permanente', label: 'Permanente', price: '' },
+    { id: 'extensiones', label: 'Extensiones de pestañas', price: '$18.000' },
+    { id: 'quitar-extensiones', label: 'Quitar extensiones', price: '$3.000' }
   ];
   var cities = ['Balcarce', 'Mar del Plata'];
   var times = ['09:00', '10:00', '11:00', '12:00', '15:00', '16:00', '17:00', '18:00', '19:00'];
@@ -168,6 +199,7 @@ AS Lash Lift · Balcarce y Mar del Plata · @lashglow_as · WhatsApp 2266 46-798
 
   function pills(boxId, items, key) {
     var box = document.getElementById(boxId);
+    if (!box) return;
     box.innerHTML = '';
     items.forEach(function (it) {
       var b = document.createElement('button');
@@ -178,7 +210,6 @@ AS Lash Lift · Balcarce y Mar del Plata · @lashglow_as · WhatsApp 2266 46-798
       var base = "font-family:'DM Sans',sans-serif;font-size:15px;padding:12px 20px;min-height:44px;border-radius:999px;border-width:1.5px;border-style:solid;";
       if (it.off) {
         b.disabled = true;
-        b.title = 'Ocupado';
         b.style.cssText = base + 'cursor:not-allowed;background:#F3E8E6;color:#6E5A5E;border-color:#EBDAD7;text-decoration:line-through';
       } else {
         b.style.cssText = base + 'cursor:pointer;' + (on
@@ -192,7 +223,7 @@ AS Lash Lift · Balcarce y Mar del Plata · @lashglow_as · WhatsApp 2266 46-798
 
   function drawAgenda() {
     var sec = document.getElementById('agenda');
-    if (!AGENDA_URL) return;
+    if (!AGENDA_URL || !sec) return;
     sec.style.display = 'block';
     var t = document.getElementById('agenda-tabla');
     var h = '<tr><th style="text-align:left;padding:8px 10px;font-weight:700">Día</th>';
@@ -213,19 +244,23 @@ AS Lash Lift · Balcarce y Mar del Plata · @lashglow_as · WhatsApp 2266 46-798
 
   function aviso(txt) {
     var a = document.getElementById('aviso');
+    if(!a) return;
     a.textContent = txt || '';
     a.style.display = txt ? 'block' : 'none';
   }
 
   function render() {
     if (st.date && st.time && isBusy(st.date, st.time)) st.time = '';
+    
     pills('servicios-opts', services.map(function (x) { return { id: x.id, label: x.label }; }), 'service');
     pills('ciudad-opts', cities.map(function (x) { return { id: x, label: x }; }), 'city');
     pills('dia-opts', days.map(function (x) { return { id: x.id, label: cap(x.text) }; }), 'date');
     pills('hora-opts', times.map(function (x) { return { id: x, label: x, off: !!st.date && isBusy(st.date, x) }; }), 'time');
+    
     drawAgenda();
 
-    var name = document.getElementById('nombre').value.trim();
+    var nameInput = document.getElementById('nombre');
+    var name = nameInput ? nameInput.value.trim() : '';
     var svc = services.filter(function (x) { return x.id === st.service; })[0];
     var day = days.filter(function (x) { return x.id === st.date; })[0];
     var complete = !!(name && svc && st.city && day && st.time);
@@ -233,7 +268,8 @@ AS Lash Lift · Balcarce y Mar del Plata · @lashglow_as · WhatsApp 2266 46-798
     var box = document.getElementById('preview-box');
     var send = document.getElementById('enviar');
     var wait = document.getElementById('pendiente');
-    if (complete) {
+    
+    if (complete && box && send && wait) {
       var msg = '¡Hola! Te escribo desde la página web para reservar un turno.\n\n' +
         'Estos son los datos que elegí:\n' +
         '• *Nombre:* ' + name + '\n' +
@@ -243,6 +279,7 @@ AS Lash Lift · Balcarce y Mar del Plata · @lashglow_as · WhatsApp 2266 46-798
         '• *Horario:* ' + st.time + ' hs\n' +
         (svc.price ? '• *Valor de lista:* ' + svc.price + '\n' : '') +
         '\n¿Me confirmás si tenés disponibilidad? ¡Muchas gracias!';
+      
       document.getElementById('preview').textContent = msg;
       send.href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(msg);
       send.dataset.name = name;
@@ -250,7 +287,7 @@ AS Lash Lift · Balcarce y Mar del Plata · @lashglow_as · WhatsApp 2266 46-798
       box.style.display = 'flex';
       send.style.display = 'block';
       wait.style.display = 'none';
-    } else {
+    } else if (box && send && wait) {
       box.style.display = 'none';
       send.style.display = 'none';
       wait.style.display = 'block';
@@ -263,7 +300,7 @@ AS Lash Lift · Balcarce y Mar del Plata · @lashglow_as · WhatsApp 2266 46-798
       busy = {};
       (j.busy || []).forEach(function (o) { busy[o.d + '|' + o.t] = 1; });
       render();
-    }).catch(function () {});
+    }).catch(function (e) { console.error('Error loading agenda:', e); });
   }
 
   document.getElementById('enviar').addEventListener('click', function (e) {
@@ -291,10 +328,11 @@ AS Lash Lift · Balcarce y Mar del Plata · @lashglow_as · WhatsApp 2266 46-798
   });
 
   document.getElementById('nombre').addEventListener('input', render);
+  
   render();
   loadBusy();
   if (AGENDA_URL) setInterval(loadBusy, 60000);
-})();
+});
 </script>
 </body>
 </html>
