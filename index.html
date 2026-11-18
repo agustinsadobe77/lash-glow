@@ -168,7 +168,7 @@ h1{font-size:clamp(44px,8vw,84px) !important}
 <section id="turnos" style="padding:96px 24px;box-sizing:border-box">
 <div style="max-width:760px;margin:0 auto;text-align:center">
 <h2 style="margin:0 0 16px;font-family:'Cormorant Garamond',serif;font-weight:500;font-size:56px">Reservá tu turno</h2>
-<p style="margin:0 auto 40px;max-width:520px;color:#6E5A5E;font-size:18px;line-height:1.6">Atiendo viernes, sábados, domingos y lunes en Balcarce y Mar del Plata. Elegí el lugar, el servicio, el día y el horario: se arma el mensaje completo y lo enviás por WhatsApp para que te confirme.</p>
+<p style="margin:0 auto 40px;max-width:520px;color:#6E5A5E;font-size:18px;line-height:1.6">Atiendo de lunes a sábado en Balcarce y Mar del Plata. Elegí el lugar, el servicio, el día y el horario: se arma el mensaje completo y lo enviás por WhatsApp para que te confirme.</p>
 </div>
 <div style="max-width:760px;margin:0 auto;background:#FFFFFF;border-radius:24px;padding:40px;box-sizing:border-box;text-align:left;display:flex;flex-direction:column;gap:32px">
 <div style="display:flex;flex-direction:column;gap:10px">
@@ -177,7 +177,7 @@ h1{font-size:clamp(44px,8vw,84px) !important}
 </div>
 <div style="display:flex;flex-direction:column;gap:10px"><div style="font-weight:700;font-size:15px">Servicio</div><div id="servicios-opts" style="display:flex;flex-wrap:wrap;gap:10px"></div></div>
 <div style="display:flex;flex-direction:column;gap:10px"><div style="font-weight:700;font-size:15px">Lugar</div><div id="ciudad-opts" style="display:flex;flex-wrap:wrap;gap:10px"></div></div>
-<div style="display:flex;flex-direction:column;gap:10px"><div style="font-weight:700;font-size:15px">Día (viernes a lunes)</div><div id="dia-opts" style="display:flex;flex-wrap:wrap;gap:10px"></div></div>
+<div style="display:flex;flex-direction:column;gap:10px"><div style="font-weight:700;font-size:15px">Día (lunes a sábado)</div><div id="dia-opts" style="display:flex;flex-wrap:wrap;gap:10px"></div></div>
 <div style="display:flex;flex-direction:column;gap:10px"><div style="font-weight:700;font-size:15px">Horario</div><div id="hora-opts" style="display:flex;flex-wrap:wrap;gap:10px"></div></div>
 <div id="preview-box" style="display:none;flex-direction:column;gap:10px">
 <div style="font-weight:700;font-size:15px">Así va a llegar tu mensaje</div>
@@ -231,7 +231,7 @@ window.addEventListener('DOMContentLoaded', function() {
   for (var i = 0; i < 60 && days.length < 12; i++) {
     cur.setDate(cur.getDate() + 1);
     var wd = cur.getDay();
-    if (wd === 5 || wd === 6 || wd === 0 || wd === 1) {
+    if (wd >= 1 && wd <= 6) {
       days.push({
         id: cur.getFullYear() + '-' + pad(cur.getMonth() + 1) + '-' + pad(cur.getDate()),
         text: cur.toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long' })
