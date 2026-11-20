@@ -18,6 +18,6 @@ trabajo-3.jpg
 
 No hace falta crear ninguna carpeta. El `index.html` nuevo ya busca las fotos por nombre en la misma carpeta donde está él.
 
-Los turnos se muestran **de lunes a sábado**, con los mismos horarios de siempre.
+Los turnos se muestran **de lunes a sábado**, con los mismos horarios de siempre. La lista incluye todas las fechas disponibles hasta fin de diciembre.
 
 > Si el repositorio ya tenía una carpeta `fotos`, podés dejarla o borrarla; esta versión no la usa.
